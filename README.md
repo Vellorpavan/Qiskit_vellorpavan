@@ -2,8 +2,7 @@
 
 > A reproducible Qiskit optimization platform evaluating how reliably the Quantum Approximate Optimization Algorithm (QAOA) discovers valid, cost-minimized workforce shift schedules compared with exact and heuristic classical references on both local simulators and real physical IBM Quantum hardware.
 
-**Challenge Context:** Qiskit Fall Fest — **Challenge I6: Shift & Resource Scheduler**  
-**Core Frameworks:** Qiskit 2.3.1 · Qiskit Aer 0.17.2 · Qiskit IBM Runtime 0.46.1 · Streamlit 1.55.0 · Python 3.10+  
+* 
 ![QUBO Penalty Cliff](image.png)
 
 ---
