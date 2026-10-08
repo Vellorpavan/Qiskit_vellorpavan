@@ -6,6 +6,8 @@ This directory contains the computational proof and research notebooks for **Shi
 
 ## 1. Purpose & Relationship to Core Engine
 
+![Single Source Engine](../docs/images/research_single_engine.jpg)
+
 Rather than maintaining separate, disconnected notebook code, every notebook in this suite imports directly from the project's tested production packages:
 - `src.model`: Workforce scheduling formulation, constraint verification, and cost evaluation.
 - `src.quantum`: Quadratic Unconstrained Binary Optimization (QUBO) formulation, Ising Hamiltonian conversion, and Qiskit QAOA ansatz circuit generation (`build_qaoa_circuit`).
@@ -18,6 +20,8 @@ All mathematical definitions, variable encodings, and penalty values ($A = 10 \c
 ---
 
 ## 2. Notebook Inventory & Execution Order
+
+![5-Stage Evidence Stairway](../docs/images/research_evidence_staircase.jpg)
 
 Execute or review the notebooks in sequential order:
 
@@ -32,6 +36,8 @@ Execute or review the notebooks in sequential order:
 ---
 
 ## 3. Verified IBM Quantum Hardware Evidence
+
+![Physical Hardware Provenance](../docs/images/research_hardware_provenance.jpg)
 
 Notebooks `04` and `05` capture and analyze an actual physical quantum job executed on the IBM Quantum Platform:
 
