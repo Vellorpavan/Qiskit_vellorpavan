@@ -1,0 +1,5 @@
+worker_id,worker_name,shift_id,shift_name,assignment_cost,is_eligible
+WA,Worker A,S_MORN,Morning Shift,40.0,True
+WA,Worker A,S_EVEN,Evening Shift,12.0,True
+WB,Worker B,S_MORN,Morning Shift,15.0,True
+WB,Worker B,S_EVEN,Evening Shift,35.0,True

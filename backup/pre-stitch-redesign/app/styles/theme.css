@@ -1,0 +1,201 @@
+/* ShiftProof UI — Custom CSS */
+
+/* ── Typography ── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+html, body, [class*="css"] {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ── Metric cards ── */
+div[data-testid="metric-container"] {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+}
+div[data-testid="metric-container"] label {
+    color: #8b949e !important;
+    font-size: 0.75rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.05em !important;
+    text-transform: uppercase !important;
+}
+div[data-testid="metric-container"] [data-testid="stMetricValue"] {
+    font-size: 2rem !important;
+    font-weight: 700 !important;
+    color: #c9d1d9 !important;
+}
+div[data-testid="metric-container"] [data-testid="stMetricDelta"] {
+    font-size: 0.8rem !important;
+}
+
+/* ── Info / callout boxes ── */
+div[data-testid="stInfo"] {
+    border-left: 3px solid #3b82f6;
+    background: rgba(59, 130, 246, 0.08) !important;
+}
+div[data-testid="stSuccess"] {
+    border-left: 3px solid #22c55e;
+    background: rgba(34, 197, 94, 0.08) !important;
+}
+div[data-testid="stWarning"] {
+    border-left: 3px solid #f59e0b;
+    background: rgba(245, 158, 11, 0.08) !important;
+}
+div[data-testid="stError"] {
+    border-left: 3px solid #ef4444;
+    background: rgba(239, 68, 68, 0.08) !important;
+}
+
+/* ── Code / monospace ── */
+code, pre {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace !important;
+    font-size: 0.85em !important;
+}
+
+/* ── Tables ── */
+div[data-testid="stDataFrame"] {
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+/* ── Sidebar ── */
+section[data-testid="stSidebar"] {
+    background: #0d1117 !important;
+    border-right: 1px solid #21262d !important;
+}
+section[data-testid="stSidebar"] hr {
+    border-color: #21262d;
+}
+
+/* ── Badges / pills ── */
+.badge-stored {
+    display: inline-block;
+    background: rgba(34, 197, 94, 0.15);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    border-radius: 4px;
+    padding: 2px 10px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace;
+}
+.badge-live {
+    display: inline-block;
+    background: rgba(59, 130, 246, 0.15);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 4px;
+    padding: 2px 10px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace;
+}
+.badge-simulator {
+    display: inline-block;
+    background: rgba(168, 85, 247, 0.15);
+    color: #c084fc;
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    border-radius: 4px;
+    padding: 2px 10px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace;
+}
+.badge-not-run {
+    display: inline-block;
+    background: rgba(107, 114, 128, 0.15);
+    color: #9ca3af;
+    border: 1px solid rgba(107, 114, 128, 0.3);
+    border-radius: 4px;
+    padding: 2px 10px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* ── Section headers ── */
+.section-header {
+    color: #8b949e;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid #21262d;
+}
+
+/* ── Ratio display ── */
+.ratio-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 1.2rem;
+    text-align: center;
+}
+.ratio-numerator {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #c9d1d9;
+    line-height: 1;
+}
+.ratio-separator {
+    font-size: 1.4rem;
+    color: #30363d;
+    margin: 0 2px;
+}
+.ratio-denominator {
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: #8b949e;
+}
+.ratio-label {
+    font-size: 0.72rem;
+    color: #8b949e;
+    margin-top: 0.4rem;
+    letter-spacing: 0.04em;
+}
+
+/* ── Pipeline step ── */
+.pipeline-step {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 0.6rem 1rem;
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+.pipeline-arrow {
+    text-align: center;
+    color: #30363d;
+    font-size: 1.4rem;
+    line-height: 1;
+}
+
+/* ── Feasibility check ── */
+.check-pass { color: #22c55e; font-weight: 600; }
+.check-fail { color: #ef4444; font-weight: 600; }
+.check-pending { color: #8b949e; }
+
+/* ── No claim banner ── */
+.no-advantage-banner {
+    background: rgba(245, 158, 11, 0.06);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    border-radius: 6px;
+    padding: 0.6rem 1rem;
+    font-size: 0.8rem;
+    color: #d97706;
+    margin: 0.5rem 0;
+}

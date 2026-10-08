@@ -1,0 +1,10 @@
+employee_id,employee_name,shift_code,shift_title,shift_date,shift_type,hourly_wage,is_available,qualifications
+W0,Elena Rostova,S0,Day Shift,2026-10-15,Morning,42.0,True,ICU Certified
+W0,Elena Rostova,S1,Evening Shift,2026-10-15,Afternoon,50.0,True,ICU Certified
+W0,Elena Rostova,S2,Night ICU Shift,2026-10-15,Night,65.0,True,ICU Certified
+W1,Marcus Chen,S0,Day Shift,2026-10-15,Morning,30.0,True,General Care
+W1,Marcus Chen,S1,Evening Shift,2026-10-15,Afternoon,35.0,True,General Care
+W1,Marcus Chen,S2,Night ICU Shift,2026-10-15,Night,999.0,False,General Care
+W2,Sarah Miller,S0,Day Shift,2026-10-15,Morning,38.0,True,General Care
+W2,Sarah Miller,S1,Evening Shift,2026-10-15,Afternoon,40.0,True,General Care
+W2,Sarah Miller,S2,Night ICU Shift,2026-10-15,Night,999.0,False,General Care

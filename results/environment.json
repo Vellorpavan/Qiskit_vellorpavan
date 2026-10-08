@@ -1,0 +1,107 @@
+{
+  "timestamp": "2026-10-07T23:02:14.433939",
+  "os": "Darwin",
+  "os_version": "Darwin Kernel Version 25.2.0: Tue Nov 18 21:09:40 PST 2025; root:xnu-12377.61.12~1/RELEASE_ARM64_T6000",
+  "os_release": "25.2.0",
+  "architecture": "arm64",
+  "python_version": "3.14.3 (v3.14.3:323c59a5e34, Feb  3 2026, 11:41:37) [Clang 16.0.0 (clang-1600.0.26.6)]",
+  "python_executable": "/Library/Frameworks/Python.framework/Versions/3.14/bin/python3",
+  "pip_version": "pip 26.0.1 from /Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/site-packages/pip (python 3.14)",
+  "packages": {
+    "numpy": "2.4.4",
+    "scipy": "1.17.1",
+    "pandas": "3.0.2",
+    "matplotlib": "3.10.8",
+    "pytest": "9.0.2",
+    "qiskit": "2.3.1",
+    "qiskit_aer": "0.17.2",
+    "qiskit_ibm_runtime": "0.46.1",
+    "qiskit_algorithms": "0.4.0",
+    "qiskit_optimization": "0.7.0"
+  },
+  "qiskit_modules": {
+    "qiskit.circuit": true,
+    "qiskit.quantum_info": true,
+    "qiskit.transpiler": true,
+    "qiskit.visualization": true,
+    "qiskit.compiler": true,
+    "qiskit.result": true,
+    "qiskit.synthesis": true,
+    "qiskit.passmanager": true,
+    "qiskit.dagcircuit": true
+  },
+  "qiskit_aer_available": true,
+  "ibm_runtime_available": true,
+  "ibm_auth_configured": false,
+  "simulator_works": true,
+  "test_counts": {
+    "00": 52,
+    "11": 48
+  },
+  "git_available": true,
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "git_repo": true,
+  "repository_structure": {
+    "root": [
+      "business_brief.md",
+      "slides.md",
+      ".DS_Store",
+      "requirements.txt",
+      "demo.ipynb",
+      "README.md",
+      "demo_executed.ipynb"
+    ],
+    "app": [],
+    "tests": [
+      "test_model.py",
+      "test_validation.py",
+      "test_classical.py",
+      "test_experiment.py",
+      "test_qaoa.py",
+      "test_quantum.py"
+    ],
+    ".agents": [],
+    ".agents/skills": [],
+    ".agents/skills/ian-xiaohei-illustrations": [
+      "VERSION",
+      "SKILL.md"
+    ],
+    ".agents/skills/ian-xiaohei-illustrations/references": [
+      "composition-patterns.md",
+      "qa-checklist.md",
+      "prompt-template.md",
+      "style-dna.md",
+      "xiaohei-ip.md"
+    ],
+    ".agents/skills/ian-xiaohei-illustrations/agents": [
+      "openai.yaml"
+    ],
+    ".agents/skills/ian-xiaohei-illustrations/assets": [],
+    ".agents/skills/ian-xiaohei-illustrations/assets/examples": [
+      "05-information-well.png",
+      "03-one-fish-many-uses.png",
+      "08-trust-bridge.png",
+      "02-sort-by-purpose.png",
+      "01-two-breakpoints.png",
+      "04-handoff-path.png",
+      "07-content-fermentation.png",
+      "06-idea-press.png"
+    ],
+    "results": [
+      "metrics.csv",
+      "instances.json",
+      "test_instances.json",
+      "environment.json"
+    ],
+    "results/figures": [],
+    "src": [
+      "model.py",
+      "dataset.py",
+      "experiment.py",
+      "classical.py",
+      "validation_runner.py",
+      "quantum.py",
+      "validation.py"
+    ]
+  }
+}
