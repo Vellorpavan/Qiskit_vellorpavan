@@ -4,7 +4,7 @@
 
 **Challenge Context:** Qiskit Fall Fest — **Challenge I6: Shift & Resource Scheduler**  
 **Core Frameworks:** Qiskit 2.3.1 · Qiskit Aer 0.17.2 · Qiskit IBM Runtime 0.46.1 · Streamlit 1.55.0 · Python 3.10+  
-**Repository:** [https://github.com/Vellorpavan/Qiskit_vellorpavan](https://github.com/Vellorpavan/Qiskit_vellorpavan)
+![QUBO Penalty Cliff](image.png)
 
 ---
 
