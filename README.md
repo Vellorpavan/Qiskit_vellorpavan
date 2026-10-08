@@ -371,111 +371,201 @@ This guarantees:
 
 ---
 
-## 10. Requirements
+# ShiftProof — Complete Setup & Run Guide
 
-### Software
-- **Python:** 3.10, 3.11, 3.12, 3.13, or 3.14 (tested on macOS and Linux)
-- **Git**
-- **Virtual Environment:** Python `venv`
+## 1. Clone the Repository
 
-### Pinned Dependencies ([requirements.txt](requirements.txt))
-- **Quantum:** `qiskit==2.3.1`, `qiskit-aer==0.17.2`, `qiskit-ibm-runtime==0.46.1`, `qiskit-algorithms==0.4.0`, `qiskit-optimization==0.7.0`
-- **Scientific:** `numpy==2.4.4`, `scipy==1.17.1`, `pandas==3.0.2`, `rustworkx==0.17.1`, `networkx==3.7`
-- **Application & Visualization:** `streamlit>=1.50.0`, `plotly>=5.0.0`, `matplotlib==3.10.8`
-- **Document Ingestion:** `openpyxl>=3.1.0`, `pypdf>=5.0.0`
-- **Notebook & Testing:** `jupyterlab==4.6.4`, `pytest==9.0.2`, `pytest-cov==7.1.0`
-
-### Optional IBM Quantum Requirements
-Local classical simulation and classical optimization require **zero external accounts or credentials**. To submit or retrieve physical quantum jobs on real IBM hardware, an IBM Quantum account token from [quantum.ibm.com](https://quantum.ibm.com/) is required.
-
----
-
-## 11. Installation — From Zero
-
-### Step 1: Clone the Repository
 ```bash
 git clone https://github.com/Vellorpavan/Qiskit_vellorpavan.git
 cd Qiskit_vellorpavan
 ```
 
-### Step 2: Create a Virtual Environment
+## 2. Check Python
+
+ShiftProof requires Python 3.10+.
+
 ```bash
-# macOS / Linux
+python3 --version
+# or:
+python --version
+```
+
+## 3. Create a Virtual Environment
+
+### macOS / Linux
+```bash
 python3 -m venv .venv
 source .venv/bin/activate
+```
 
-# Windows (Command Prompt / PowerShell)
+### Windows
+```powershell
 python -m venv .venv
 .venv\Scripts\activate
 ```
 
-### Step 3: Upgrade pip and Install Dependencies
+## 4. Install Dependencies
+
+From the project root:
+
 ```bash
-pip install --upgrade pip
+python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-### Step 4: Verify Installation & Run Tests
+This installs the required environment for:
+- Qiskit & Qiskit Aer
+- Qiskit IBM Runtime
+- Qiskit Algorithms & Qiskit Optimization
+- NumPy, SciPy, Pandas
+- Streamlit & Plotly
+- Matplotlib
+- JupyterLab
+- Pytest & Pytest-cov
+- Excel & PDF ingestion
+
+## 5. Verify the Installation
+
+Run the complete automated test suite:
+
 ```bash
 pytest -q
 ```
-Expected output:
-```
-133 passed in 5.8s
-```
 
-### Step 5: Launch the Streamlit Web Application
+The important requirement is:
+```text
+ALL TESTS PASSED
+0 FAILED
+```
+(Current verified suite: **133 passed in 5.8s**)
+
+## 6. Start the ShiftProof Web Application
+
+Run:
+
 ```bash
 streamlit run app/main.py
 ```
-Open your browser at `http://localhost:8501`.
 
----
-
-## 12. Quick Start
-
-```bash
-git clone https://github.com/Vellorpavan/Qiskit_vellorpavan.git
-cd Qiskit_vellorpavan
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-pytest -q
-streamlit run app/main.py
+Streamlit will display a local address:
+```text
+http://localhost:8501
 ```
 
----
+Open that address in your browser.
 
-## 13. Running the Web UI
+## 7. Using the Web Application
 
-ShiftProof provides four intuitive, specialized pages:
+ShiftProof has four primary areas:
 
-### 1. Workspace (`/workspace`)
-- Displays current active dataset and execution readiness (`DATASET READY`).
-- Displays 3 dedicated solver cards:
-  - **Classical Optimization:** Greedy heuristic and branch-and-bound solver.
-  - **QAOA Simulation:** Qiskit AerSimulator (1,024 shots, COBYLA).
-  - **IBM Quantum Hardware:** Real physical QPU execution interface.
-- Core rule: **Activation $\neq$ Execution**. Activating a dataset never runs solvers automatically.
+```text
+Data
+  ↓
+Workspace
+  ↓
+Results
+  ↓
+Quantum
+```
 
-### 2. Data (`/data`)
-- Drag-and-drop file uploader for CSV, XLSX, and JSON datasets.
-- Displays automatic schema understanding results, role mappings, and sample preview.
-- Computes deterministic SHA-256 fingerprint.
-- **Activate Dataset** button makes the dataset active across the platform.
+### STEP 1 — Data
+Open **Data** (`/data`) and upload a scheduling dataset. A reference sample dataset is included in `data/sample/workforce_schedule_3x3.csv`.
 
-### 3. Results (`/results`)
-- Displays verified classical schedule roster and assignment details.
-- Comprehensive constraint satisfaction audit (Shift Coverage, Worker Capacity, Skill Requirements).
-- Exact vs. Greedy runtime and optimality comparison.
-- Explicit action button: `[↻ Run Classical Again]`.
+ShiftProof processes the file through:
 
-### 4. Quantum (`/quantum`)
-- Displays logical QAOA circuit metrics: qubit count, depth, 2-qubit gates.
-- Telemetry dashboard: total shots (1,024), feasibility rate, empirical bitstring probability distribution histogram.
-- Best feasible state cost comparison with the exact classical optimum.
-- **IBM Quantum Platform Section:** Authenticates credentials, discovers QPUs, checks instance compatibility, displays transpiled depth, and inspects real hardware measurement counts.
-- Explicit action button: `[↻ Run QAOA Again]`.
+```text
+Uploaded File
+    ↓
+File Detection
+    ↓
+Schema Understanding
+    ↓
+Scheduling Classification
+    ↓
+Normalization
+    ↓
+Canonical Scheduling Instance
+    ↓
+Dataset Fingerprint
+```
+
+Review the detected columns and click **Activate Dataset**.
+
+> **IMPORTANT:** Activating a dataset does NOT execute any solver.
+
+### STEP 2 — Workspace
+Open **Workspace** (`/workspace`). After activating a dataset, the expected state is:
+
+```text
+Dataset: <your dataset>
+Status: DATASET READY
+Classical: NOT RUN
+QAOA: NOT RUN
+```
+
+The application intentionally separates:
+```text
+Dataset Activation ≠ Solver Execution
+```
+
+No solver runs merely because a dataset was activated.
+
+### STEP 3 — Run Classical Optimization
+From Workspace click:
+
+`▶ Run Classical Optimization`
+
+ShiftProof executes the classical reference optimization against the currently active dataset. The application then automatically opens **Results** (`/results`).
+
+The Results page shows:
+- Selected workers
+- Assigned shifts
+- Assignment costs & total schedule cost
+- Constraint verification audit (coverage, capacity, skills)
+- Exact classical result vs. Greedy classical result
+- Optimality comparison
+
+### STEP 4 — Run QAOA Simulation
+Return to **Workspace** (`/workspace`) and click:
+
+`⚡ Run QAOA Simulation`
+
+The actual scientific pipeline is:
+
+```text
+Active Dataset
+      ↓
+Canonical Instance
+      ↓
+QUBO
+      ↓
+Ising Hamiltonian
+      ↓
+QAOA Circuit
+      ↓
+Qiskit AerSimulator
+      ↓
+Measurement Counts
+      ↓
+Independent Verification
+      ↓
+Best Feasible Schedule
+```
+
+After execution, the application automatically opens **Quantum** (`/quantum`).
+
+### STEP 5 — Quantum Page
+The Quantum page displays the actual QAOA execution, including:
+- Dataset identity & SHA-256 fingerprint
+- Instance information & number of logical qubits
+- QAOA depth ($p=1$)
+- Circuit depth, total gate count, and 2-qubit gate count
+- Number of shots (1,024)
+- Feasibility rate & empirical measurement distribution histogram
+- Best feasible solution & assignment cost
+- Classical optimum comparison ($0.00 observed gap)
+- Actual Qiskit `QuantumCircuit`
+- IBM Quantum connection status
 
 ### How to Read Your Results
 
@@ -489,23 +579,359 @@ ShiftProof provides four intuitive, specialized pages:
 | **Feasibility Rate** | The fraction of measurement shots that satisfied all hard constraints. Measures how effectively QAOA constructive interference concentrates probability on valid schedules. |
 | **Exact Cost** | The mathematically guaranteed minimum-cost schedule found by branch-and-bound classical enumeration ($\le 16$ variables). |
 
----
+## 8. Navigation Does NOT Re-run the Algorithm
 
-## 14. Exact User Workflow
+Once QAOA has been executed, navigating between pages must NOT execute QAOA again.
 
-Follow this step-by-step workflow:
+For example:
+```text
+Workspace
+   ↓
+Run QAOA
+   ↓
+Quantum
+   ↓
+Results
+   ↓
+Workspace
+   ↓
+Quantum
+```
 
-1. **Start ShiftProof:** Run `streamlit run app/main.py`.
-2. **Ingest Data:** Navigate to `/data` and upload `data/sample/workforce_schedule_3x3.csv`.
-3. **Review & Activate:** Inspect the detected schema mappings and click **Activate Dataset**.
-4. **Inspect Workspace:** Navigate to `/workspace`. Confirm status: `Status: DATASET READY`, `Classical: NOT RUN`, `QAOA: NOT RUN`.
-5. **Run Classical Solver:** Click **▶ Run Classical Optimization**. The solver executes, persists results, and automatically routes to `/results`.
-6. **Review Schedule:** On `/results`, inspect the roster table and constraint verification audit.
-7. **Run QAOA Simulation:** Return to `/workspace` and click **⚡ Run QAOA Simulation**. The Qiskit QAOA pipeline runs on `AerSimulator` and automatically routes to `/quantum`.
-8. **Inspect Quantum Metrics:** On `/quantum`, review the logical circuit, measurement histogram, feasibility rate, and classical vs. QAOA cost comparison.
-9. **Verify Non-Reexecution:** Navigate back to `/workspace` or refresh `/quantum`. Notice that the existing completed result displays immediately without re-executing QAOA.
-10. **Explicit Rerun:** To run another simulation with fresh samples, click **↻ Run QAOA Again**.
-11. **Inspect IBM Hardware Evidence:** On `/quantum`, expand the **IBM Quantum Platform** section to inspect real hardware execution evidence from QPU `ibm_fez`.
+The existing execution result remains available.
+- Navigation is not execution.
+- Dataset activation is not execution.
+- Viewing a result is not execution.
+- Only an explicit Run button starts a new execution.
+
+## 9. Running QAOA Again
+
+If you intentionally want another QAOA execution with fresh measurement samples, use:
+
+`↻ Run QAOA Again`
+
+This performs a new execution and generates a new experiment/result.
+
+## 10. Optional IBM Quantum Hardware
+
+IBM Quantum hardware is optional. The local application works without IBM credentials.
+
+To use real IBM Quantum hardware, create a local environment file:
+
+```bash
+cp .env.example .env
+```
+
+Then configure:
+
+```ini
+IBM_QUANTUM_TOKEN=YOUR_TOKEN_HERE
+IBM_QUANTUM_INSTANCE=
+IBM_QUANTUM_CHANNEL=ibm_quantum
+```
+
+### Important Security Rules:
+- Never commit `.env`
+- Never put the token in Python source code
+- Never put the token in notebooks
+- Never put the token in `README.md`
+- Never put the token in screenshots
+- Never put the token in GitHub
+- Never paste the token into public issues or discussions
+
+The repository contains `.env.example`, but `.env` is git-ignored and never committed.
+
+## 11. IBM Quantum Hardware Workflow
+
+When valid IBM credentials are configured, ShiftProof can:
+
+```text
+IBM Quantum Authentication
+          ↓
+Backend Discovery
+          ↓
+Select Compatible QPU
+          ↓
+Build Same Logical QAOA Circuit
+          ↓
+Transpile for Selected QPU
+          ↓
+Submit Physical Quantum Job
+          ↓
+Retrieve Measurement Counts
+          ↓
+Decode Bitstrings
+          ↓
+Independently Verify Constraints
+          ↓
+Calculate Cost
+          ↓
+Compare With Classical Optimum
+          ↓
+Display Hardware Evidence
+```
+
+The IBM hardware path is completely separate from the local `AerSimulator` execution path.
+
+## 12. Research Notebooks
+
+ShiftProof also contains reproducible research notebooks in [research/notebooks/](research/notebooks/):
+
+- [01_qaoa_aer_execution.ipynb](research/notebooks/01_qaoa_aer_execution.ipynb): Demonstrates the mathematical QAOA pipeline (`Instance → QUBO → Ising → Circuit → AerSimulator → Verification`).
+- [02_real_dataset_to_qaoa.ipynb](research/notebooks/02_real_dataset_to_qaoa.ipynb): Demonstrates external dataset ingestion to QAOA (`CSV → Schema → Normalization → Instance → QAOA → Verification`).
+- [03_classical_vs_qaoa.ipynb](research/notebooks/03_classical_vs_qaoa.ipynb): Empirical benchmark comparing `Exact Classical vs Greedy Classical vs QAOA AerSimulator`.
+- [04_ibm_quantum_execution.ipynb](research/notebooks/04_ibm_quantum_execution.ipynb): Demonstrates the IBM Quantum hardware execution bridge and optimization decision dashboard.
+- [05_real_ibm_hardware_execution.ipynb](research/notebooks/05_real_ibm_hardware_execution.ipynb): Provides detailed reproducible evidence of an actual IBM Quantum physical QPU execution (`ibm_fez`).
+
+The notebooks use the exact same scientific implementation from:
+- [src/model.py](src/model.py)
+- [src/classical.py](src/classical.py)
+- [src/quantum.py](src/quantum.py)
+- [src/validation.py](src/validation.py)
+
+There is zero separate/fake QAOA implementation inside the notebooks.
+
+## 13. Run JupyterLab
+
+Activate the virtual environment first:
+
+```bash
+source .venv/bin/activate
+jupyter lab research/notebooks/
+```
+
+You can open any notebook directly from JupyterLab.
+
+## 14. Notebook Import Path
+
+Run notebooks from the repository root. If necessary:
+
+```bash
+export PYTHONPATH=.
+jupyter lab research/notebooks/
+```
+
+For command-line execution:
+
+```bash
+PYTHONPATH=. jupyter nbconvert \
+  --to notebook \
+  --execute \
+  research/notebooks/01_qaoa_aer_execution.ipynb \
+  --output 01_qaoa_aer_execution.ipynb
+```
+
+## 15. Recommended Research Order
+
+Run the notebooks in this order:
+
+```text
+01_qaoa_aer_execution.ipynb
+            ↓
+02_real_dataset_to_qaoa.ipynb
+            ↓
+03_classical_vs_qaoa.ipynb
+            ↓
+04_ibm_quantum_execution.ipynb
+            ↓
+05_real_ibm_hardware_execution.ipynb
+```
+
+## 16. Project Architecture
+
+The core scientific engine is shared by both the website and research notebooks:
+
+```text
+                     SHIFT PROOF
+                          │
+                ┌─────────┴─────────┐
+                │                   │
+                ▼                   ▼
+          Streamlit UI       Research Notebooks
+                │                   │
+                └─────────┬─────────┘
+                          ▼
+                   Shared Core Engine
+                          │
+          ┌───────────────┼───────────────┐
+          ▼               ▼               ▼
+       Classical         QUBO            QAOA
+       Solvers          /Ising          Circuit
+                          │
+                          ▼
+                ┌─────────┴─────────┐
+                ▼                   ▼
+          AerSimulator       IBM Quantum QPU
+                │                   │
+                └─────────┬─────────┘
+                          ▼
+                Independent Verification
+                          │
+                          ▼
+                Human-readable Results
+```
+
+## 17. Core Scientific Source
+
+The main mathematical implementation is located in [src/](src/):
+- `src/model.py`: Scheduling model, decision variables, and constraint checking.
+- `src/classical.py`: Exact branch-and-bound and greedy classical solvers.
+- `src/quantum.py`: QUBO, Ising Hamiltonian, and QAOA ansatz circuit generation.
+- `src/validation.py`: Independent mathematical energy and penalty verification.
+- `src/dataset.py`: Benchmark dataset generation.
+- `src/experiment.py`: Reproducible experiment execution.
+
+## 18. Streamlit Application
+
+The web application is located in [app/](app/):
+- `app/main.py`: Main router and entrypoint (`st.navigation`).
+- `app/pages/00_workspace.py`: Workspace and solver execution cards.
+- `app/pages/01_data.py`: Multi-format dataset ingestion and activation.
+- `app/pages/02_results.py`: Classical optimization results and audits.
+- `app/pages/03_quantum.py`: QAOA simulation telemetry and IBM QPU interface.
+
+Backend services:
+- `app/services/dataset_service.py`
+- `app/services/execution_state.py`
+- `app/services/execution_proof_service.py`
+- `app/services/experiment_service.py`
+- `app/services/scheduling_service.py`
+- `app/services/ibm_quantum_service.py`
+- `app/services/ingestion/`: Multi-format parsing, schema understanding, and normalization.
+
+## 19. Example Complete Workflow
+
+A new user can perform the entire local demonstration as follows:
+
+```text
+ 1. Clone repository
+       ↓
+ 2. Create .venv
+       ↓
+ 3. Install requirements
+       ↓
+ 4. Run pytest
+       ↓
+ 5. Start Streamlit
+       ↓
+ 6. Open Data
+       ↓
+ 7. Upload workforce_schedule_3x3.csv
+       ↓
+ 8. Review detected schema
+       ↓
+ 9. Activate dataset
+       ↓
+10. Open Workspace
+       ↓
+11. Confirm DATASET READY
+       ↓
+12. Run Classical Optimization
+       ↓
+13. Automatically view Results
+       ↓
+14. Return to Workspace
+       ↓
+15. Run QAOA Simulation
+       ↓
+16. Automatically view Quantum
+       ↓
+17. Inspect actual circuit and measurements
+       ↓
+18. Compare QAOA with classical solution
+       ↓
+19. Optionally configure IBM Quantum
+       ↓
+20. Run physical QPU experiment
+```
+
+## 20. Fastest Possible Setup
+
+For a reviewer who only wants to start the application:
+
+```bash
+git clone https://github.com/Vellorpavan/Qiskit_vellorpavan.git
+cd Qiskit_vellorpavan
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+streamlit run app/main.py
+```
+
+Then open `http://localhost:8501`.
+
+## 21. Windows Fast Setup
+
+On Windows PowerShell:
+
+```powershell
+git clone https://github.com/Vellorpavan/Qiskit_vellorpavan.git
+cd Qiskit_vellorpavan
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+pytest -q
+streamlit run app/main.py
+```
+
+## 22. Stopping the Application
+
+To stop Streamlit:
+Press `Ctrl + C` in your terminal.
+
+To leave the virtual environment:
+```bash
+deactivate
+```
+
+## 23. Important Scientific Disclaimer
+
+ShiftProof is an optimization and experimental quantum-computing platform. It does NOT claim:
+- Quantum speedup
+- Quantum advantage
+- Commercial quantum superiority
+- That QAOA is faster than classical optimization
+- That every QAOA measurement is feasible
+- That physical QPU results are noiseless
+
+Every measured solution is independently checked. The system distinguishes:
+
+```text
+Most Probable State ≠ Best Feasible State ≠ Classical Global Optimum
+```
+
+All three are reported separately when applicable.
+
+## 24. Final Reviewer Path
+
+A reviewer can evaluate the project using this sequence:
+
+```text
+README.md
+    ↓
+pytest -q
+    ↓
+streamlit run app/main.py
+    ↓
+Data
+    ↓
+Workspace
+    ↓
+Results
+    ↓
+Quantum
+    ↓
+research/notebooks/
+    ↓
+src/quantum.py
+    ↓
+src/classical.py
+    ↓
+src/validation.py
+```
+
+This provides both **Interactive Product Evidence** and **Reproducible Scientific Evidence**.
 
 ---
 
