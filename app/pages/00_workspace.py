@@ -33,6 +33,7 @@ from app.services.execution_state import (
     set_navigation_target,
     get_completed_classical_experiment,
     get_completed_qaoa_experiment,
+    get_completed_ibm_experiment,
 )
 from app.services.ibm_quantum_service import get_connection_status
 from src.model import check_constraints
