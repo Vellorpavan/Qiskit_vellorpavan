@@ -211,3 +211,74 @@ def test_ui_quantum_page_connected_mock(monkeypatch):
     assert metric_values[idx] == "CONNECTED"
     assert "AerSimulator (Classical)" in metric_values
 
+
+def test_audit_hardware_measurements_deterministic():
+    """Verify hardware measurement audit correctly identifies feasible states, costs, and gaps."""
+    from src.model import Instance
+    import numpy as np
+
+    cost_matrix = np.array([[10.0, 20.0], [15.0, 25.0]])
+    eligibility = np.ones((2, 2), dtype=bool)
+    inst = Instance(
+        n_workers=2,
+        n_shifts=2,
+        cost_matrix=cost_matrix,
+        eligibility=eligibility,
+        instance_id="test_inst_2x2",
+        seed=42,
+    )
+    # Bit ordering in decode_bitstring: reversed index
+    # Assignment W0->S0, W1->S1 means x_{0,0}=1, x_{1,1}=1.
+    # Total cost = 10 + 25 = 35.
+    raw_counts = {
+        "1001": 500,  # Feasible
+        "0000": 300,  # Infeasible
+        "1111": 200,  # Infeasible
+    }
+    audit = ibm_svc.audit_hardware_measurements(inst, raw_counts, exact_cost=35.0)
+
+    assert audit["total_shots"] == 1000
+    assert audit["unique_states"] == 3
+    assert audit["feasible_shots"] == 500
+    assert audit["feasibility_rate"] == 50.0
+    assert audit["most_probable_state"] == "1001"
+    assert audit["best_feasible_cost"] == 35.0
+    assert audit["exact_cost"] == 35.0
+    assert audit["abs_gap"] == 0.0
+    assert audit["rel_gap"] == 0.0
+    assert audit["optimal_probability"] == 0.5
+
+
+def test_extract_hardware_counts_from_result():
+    """Verify counts extraction from SamplerV2 pub result structure."""
+    mock_pub = MagicMock()
+    mock_pub.data.meas.get_counts.return_value = {"010": 40, "101": 60}
+    mock_result = [mock_pub]
+
+    counts = ibm_svc.extract_hardware_counts(mock_result)
+    assert counts == {"010": 40, "101": 60}
+
+
+def test_poll_job_completion():
+    """Verify poll_job returns result when status reaches DONE."""
+    mock_job = MagicMock()
+    mock_job.job_id.return_value = "job_test_123"
+    mock_job.status.side_effect = ["QUEUED", "RUNNING", "DONE"]
+    mock_job.result.return_value = "mock_result_data"
+
+    res = ibm_svc.poll_job(mock_job, timeout_seconds=10, poll_interval=0.01)
+    assert res == "mock_result_data"
+
+
+def test_poll_job_failure():
+    """Verify poll_job raises RuntimeError on ERROR status."""
+    mock_job = MagicMock()
+    mock_job.job_id.return_value = "job_test_fail"
+    mock_job.status.return_value = "ERROR"
+    mock_job.error_message.return_value = "Internal QPU calibration error"
+
+    with pytest.raises(RuntimeError) as exc_info:
+        ibm_svc.poll_job(mock_job, timeout_seconds=5, poll_interval=0.01)
+    assert "calibration error" in str(exc_info.value)
+
+

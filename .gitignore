@@ -47,3 +47,5 @@ results/test_instances.json
 dist/
 build/
 *.egg-info/
+brag-output*/
+
